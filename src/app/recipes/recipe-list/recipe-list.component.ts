@@ -9,7 +9,12 @@ import { Recipe } from './../recipe.model';
 })
 export class RecipeListComponent implements OnInit {
 
-  recipes: Recipe[] = [];
+  recipes: Recipe[] = [
+    { name: 'A test recipe',
+      description: 'This is just a test recipe!',
+      imagePath: 'https://farm4.staticflickr.com/3112/3217904076_30162f05df_b.jpg'
+    }
+  ];
 
   constructor() { }
 
