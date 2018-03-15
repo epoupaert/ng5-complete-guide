@@ -13,6 +13,10 @@ export class RecipeListComponent implements OnInit {
     { name: 'A test recipe',
       description: 'This is just a test recipe!',
       imagePath: 'https://farm4.staticflickr.com/3112/3217904076_30162f05df_b.jpg'
+    },
+    { name: 'A test recipe',
+      description: 'This is just a test recipe!',
+      imagePath: 'https://farm4.staticflickr.com/3112/3217904076_30162f05df_b.jpg'
     }
   ];
 
