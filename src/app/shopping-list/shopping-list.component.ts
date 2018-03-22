@@ -7,7 +7,7 @@ import { Ingredient } from '../shared/ingredient.model';
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrls: ['./shopping-list.component.css'],
-  providers: [ShoppingListService]
+  providers: []
 })
 export class ShoppingListComponent implements OnInit {
   ingredients: Ingredient[];
