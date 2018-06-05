@@ -19,6 +19,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MessageComponent } from './shared/message/message.component';
 import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component';
 import { StorageService } from './shared/storage.service';
+import { SignupComponent } from './auth/signup/signup.component';
+import { SigninComponent } from './auth/signin/signin.component';
 
 
 @NgModule({
@@ -33,7 +35,9 @@ import { StorageService } from './shared/storage.service';
     ShoppingEditComponent,
     DropdownDirective,
     MessageComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    SignupComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
