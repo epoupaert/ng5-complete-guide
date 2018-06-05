@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
+import { Response } from '@angular/http';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 import { Recipe } from './recipe.model';
 import { Ingredient } from '../shared/ingredient.model';
+import { StorageService } from '../shared/storage.service';
 import { ShoppingListService } from './../shopping-list/shopping-list.service';
 
 @Injectable()
@@ -10,7 +13,9 @@ export class RecipeService {
 
   recipesChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
+  private recipes: Recipe[] = [];
+
+/*   private recipes: Recipe[] = [
     { name: 'A test recipe',
       description: 'This is just a test recipe!',
       imagePath: 'https://farm4.staticflickr.com/3112/3217904076_30162f05df_b.jpg',
@@ -28,8 +33,12 @@ export class RecipeService {
       ]
     }
   ];
+ */
 
-  constructor(private shoppingListService: ShoppingListService) { }
+  constructor(
+    private shoppingListService: ShoppingListService,
+    private storageService: StorageService
+  ) {}
 
   getRecipes() { return this.recipes.slice(); }
 
@@ -52,5 +61,19 @@ export class RecipeService {
   deleteRecipe(index: number) {
     this.recipes.splice(index, 1);
     this.recipesChanged.next(this.recipes.slice());
+  }
+
+  saveRecipes(): Observable<Response> {
+    return this.storageService.storeRecipes(this.recipes);
+  }
+
+  fetchRecipes() {
+    this.storageService.fetchRecipes().subscribe(
+      (recipes: Recipe[]) => {
+        this.recipes = recipes;
+        this.recipesChanged.next(this.recipes.slice());
+      },
+      (error: any) => console.log(error)
+    );
   }
 }
