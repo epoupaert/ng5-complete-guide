@@ -1,3 +1,4 @@
+import { AuthGuardService } from './auth/auth-guard.service';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -13,9 +14,9 @@ const appRoutes: Routes = [
   { path: '', redirectTo: '/recipes', pathMatch: 'full' },
   { path: 'recipes', component: RecipesComponent, children: [
     { path: '', component: MessageComponent, data: {message: 'Please select a recipe!'}, pathMatch: 'full' },
-    { path: 'new', component: RecipeEditComponent },
+    { path: 'new', component: RecipeEditComponent, canActivate: [AuthGuardService]},
     { path: ':id', component: RecipeDetailComponent },
-    { path: ':id/edit', component: RecipeEditComponent }
+    { path: ':id/edit', component: RecipeEditComponent, canActivate: [AuthGuardService]}
   ]},
   { path: 'shopping-list', component: ShoppingListComponent },
   { path: 'signup', component: SignupComponent },
