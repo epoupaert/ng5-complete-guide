@@ -1,46 +1,42 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/fromPromise';
 import * as firebase from 'firebase';
 
 @Injectable()
 export class AuthService {
 
-  token: string;
+  private authenticated = false;
 
   signup(email: string, password: string) {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
       .catch(
         error => console.log(error)
       );
   }
 
   signin(email: string, password: string) {
-    firebase.auth().signInWithEmailAndPassword(email, password)
+    return firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
-        response => {
-          console.log(response);
-          firebase.auth().currentUser.getIdToken().then(
-            (token: string) => this.token = token
-          );
-        }
+        response => this.authenticated = true
       )
       .catch(
         error => console.log(error)
       );
   }
 
-  getToken() {
-    firebase.auth().currentUser.getIdToken().then(
-      (token: string) => this.token = token
+  getToken(): Observable<any> {
+    return Observable.fromPromise(
+      firebase.auth().currentUser.getIdToken()
     );
-    return this.token;
   }
 
   isAuthenticated() {
-    return this.token != null;
+    return this.authenticated;
   }
 
   logout() {
     firebase.auth().signOut();
-    this.token = null;
+    this.authenticated = false;
   }
 }
